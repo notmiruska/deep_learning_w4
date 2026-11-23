@@ -46,7 +46,7 @@ print(tokens)
 # -----------------------------------------------
 def tokenize(string: str) -> list:
     words = ["".join(char for char in word if char.isalnum()).lower() for word in string.split()]
-    return set(words)
+    return list(dict.fromkeys(words))
 
 
 # -----------------------------------------------
