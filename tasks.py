@@ -45,7 +45,7 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    words = ["".join(char for char in word if char not in ".,;:!?()").lower() for word in string.split()]
+    words = ["".join(char for char in word if char.isalnum()).lower() for word in string.split()]
     return sorted(set(words))
 
 
