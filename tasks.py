@@ -336,7 +336,7 @@ def rnn_loss(w: np.array, list_of_sequences: list[np.array], y: np.array) -> np.
 # The data that we will fit is a macroeconomics data set. We'll try to predict inflation ('infl')
 # from the consumer price index ('cpi') and unemployment rate ('unemp').
 # First, load the data set:
-from statsmodels.datasets import macrodata
+#from statsmodels.datasets import macrodata
 
 #data = macrodata.load_pandas().data
 #X = np.hstack([np.ones((len(data),1)), data[['cpi','unemp']].values]) # Features: CPI and unemployment
@@ -368,7 +368,7 @@ from statsmodels.datasets import macrodata
 # Now we are ready to fit the RNN to the data set. We need to load the optimization routine 
 # 'minimize' from the scipy.optimize module
 
-from scipy.optimize import minimize
+#from scipy.optimize import minimize
 
 # fit the RNN (this may take a minute)
 #fit = minimize(rnn_loss, wstart, args=(list_of_sequences, yy), method='BFGS')
@@ -393,7 +393,7 @@ from scipy.optimize import minimize
 # many more parameters, and so is more flexible. 
 
 # To visualize the difference in performance we plot the true values and predicted values
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 #plt.plot(yy)
 #plt.plot(pred)
