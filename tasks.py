@@ -287,11 +287,11 @@ def rnn_layer(w: np.array, list_of_sequences: list[np.array], sigma=sigmoid ) ->
     pass # Your code
 
 # Test
-np.random.seed(10)
-list_of_sequences = [np.random.normal(size=(5,3)) for _ in range(100)]
-wstart = np.random.normal(size=(3*3 + 3*3 + 3)) 
-o = rnn_layer(wstart, list_of_sequences)
-o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
+#np.random.seed(10)
+#list_of_sequences = [np.random.normal(size=(5,3)) for _ in range(100)]
+#wstart = np.random.normal(size=(3*3 + 3*3 + 3)) 
+#o = rnn_layer(wstart, list_of_sequences)
+#o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
 # -----------------------------------------------
 
 
@@ -322,9 +322,9 @@ def rnn_loss(w: np.array, list_of_sequences: list[np.array], y: np.array) -> np.
     pass # Your code
 
 # Test:
-y = np.array([(X @ np.arange(1,4))[0] for X in list_of_sequences])
-o = rnn_loss(wstart, list_of_sequences, y)
-o.size == 1 and o.round(3) == 17794.733
+#y = np.array([(X @ np.arange(1,4))[0] for X in list_of_sequences])
+#o = rnn_loss(wstart, list_of_sequences, y)
+#o.size == 1 and o.round(3) == 17794.733
 # -----------------------------------------------
 
 
@@ -338,25 +338,25 @@ o.size == 1 and o.round(3) == 17794.733
 # First, load the data set:
 from statsmodels.datasets import macrodata
 
-data = macrodata.load_pandas().data
-X = np.hstack([np.ones((len(data),1)), data[['cpi','unemp']].values]) # Features: CPI and unemployment
-y = data['infl'].values # Target: inflation
+#data = macrodata.load_pandas().data
+#X = np.hstack([np.ones((len(data),1)), data[['cpi','unemp']].values]) # Features: CPI and unemployment
+#y = data['infl'].values # Target: inflation
 
 # Next we want to prepare a dataset for training sequence-based models like RNNs. We create 
 # input-output pairs where each input is a sequence of seq_len time steps from X, and the output 
 # is the corresponding target value y at the next time step after the sequence.
 
-seq_len = 7 # Define the length of each input sequence (we choose 7 consecutive time steps).
+#seq_len = 7 # Define the length of each input sequence (we choose 7 consecutive time steps).
 
 # Create a list of tuples:
-data_pairs = [(X[i:i+seq_len], y[i+seq_len]) for i in range(len(X)-seq_len)]
+#data_pairs = [(X[i:i+seq_len], y[i+seq_len]) for i in range(len(X)-seq_len)]
 # - First element: a slice of `X` of length `seq_len` (the input sequence).
 # - Second element: the target value `y` corresponding to the step after the sequence.
 # Example: If seq_len=4, for i=0, pair is (X[0:4], y[4]).
 
 # We need the input sequences and target values in a separate list. A trick to do this is this:
 
-list_of_sequences, yy = list(zip(*data_pairs))
+#list_of_sequences, yy = list(zip(*data_pairs))
 
 # Here, the zip(*...) is used for transposing a list of tuples. It splits the tuple pairs into 
 # two separate lists:
@@ -371,23 +371,23 @@ list_of_sequences, yy = list(zip(*data_pairs))
 from scipy.optimize import minimize
 
 # fit the RNN (this may take a minute)
-fit = minimize(rnn_loss, wstart, args=(list_of_sequences, yy), method='BFGS')
-print(fit)
+#fit = minimize(rnn_loss, wstart, args=(list_of_sequences, yy), method='BFGS')
+#print(fit)
 
 # The 'success' component in fit may be false, and this is due to a loss of computational 
 # precision. For now we'll just settle for the weights it has found so far. 
 
 # To evaluate the fit we can compute the correlation between the values predicted by the
 # RNN and the true values
-pred = rnn_layer(fit['x'], list_of_sequences)
-np.corrcoef(pred,yy)
+#pred = rnn_layer(fit['x'], list_of_sequences)
+#np.corrcoef(pred,yy)
 
 # How good is this? To gage the performance of the RNN we'll compare it to a linear 
 # regression with the same data
-Z = X[:len(yy)] # features corresponding to elements in yy at the previous time step
-linreg_coefs = np.linalg.lstsq(Z, yy, rcond=None)[0] # rcond=None suppresses warning message
-linreg_pred = Z @ linreg_coefs
-np.corrcoef(linreg_pred, yy)
+#Z = X[:len(yy)] # features corresponding to elements in yy at the previous time step
+#linreg_coefs = np.linalg.lstsq(Z, yy, rcond=None)[0] # rcond=None suppresses warning message
+#linreg_pred = Z @ linreg_coefs
+#np.corrcoef(linreg_pred, yy)
 
 # The correlation of the RNN predicted values is substantially higher! But it also has
 # many more parameters, and so is more flexible. 
@@ -395,9 +395,9 @@ np.corrcoef(linreg_pred, yy)
 # To visualize the difference in performance we plot the true values and predicted values
 import matplotlib.pyplot as plt
 
-plt.plot(yy)
-plt.plot(pred)
-plt.plot(linreg_pred)
-plt.legend(['Truth','RNN','LinReg'])
+#plt.plot(yy)
+#plt.plot(pred)
+#plt.plot(linreg_pred)
+#plt.legend(['Truth','RNN','LinReg'])
 
 
